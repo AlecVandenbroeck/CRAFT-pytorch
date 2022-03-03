@@ -7,7 +7,7 @@ if not os.path.isfile('/tmp/craft_mlt_25k.pth'):
     download_file_from_google_drive('1Jk4eGD7crsqCCg9C9VjCLkMN3ze8kutZ', '/tmp/craft_mlt_25k.pth')
 
 net = CRAFT()
-net.load_state_dict(copyStateDict(torch.load('/tmp/craft_mlt_25k.pth', map_location='cpu')))
+net.load_state_dict(copyStateDict(torch.load('/tmp/craft_mlt_25k.pth', map_location=lambda storage, loc: storage.cuda(0))))
 net.eval()
 refine_net = None
 
