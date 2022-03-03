@@ -45,8 +45,6 @@ def str2bool(v):
 
 
 def test_net(net, image, text_threshold, link_threshold, low_text, cuda, refine_net=None):
-    print(f'Argument CUDA is {cuda}')
-
     # resize
     img_resized, target_ratio, size_heatmap = imgproc.resize_aspect_ratio(image, 1280, interpolation=cv2.INTER_LINEAR,
                                                                           mag_ratio=1.5)

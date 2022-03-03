@@ -11,8 +11,6 @@ net.load_state_dict(copyStateDict(torch.load('/tmp/craft_mlt_25k.pth', map_locat
 net = net.cuda()
 net = torch.nn.DataParallel(net)
 net.eval()
-print(next(net.parameters()).device)
-print(next(net.parameters()).is_cuda)
 refine_net = None
 
 
