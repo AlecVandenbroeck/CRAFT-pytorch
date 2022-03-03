@@ -13,9 +13,8 @@ refine_net = None
 
 
 def detect_text(img, text_threshold=0.7, link_threshold=0.4, low_text=0.4):
-    bboxes, polys, score_text = test_net(net, img, text_threshold, link_threshold, low_text, False, False,
-                                         refine_net)
-    return bboxes, polys, score_text
+    bboxes = test_net(net, img, text_threshold, link_threshold, low_text, False, False, refine_net)
+    return bboxes
 
 
 def show_bounding_boxes(img, bboxes):

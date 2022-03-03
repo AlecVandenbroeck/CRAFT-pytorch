@@ -30,7 +30,6 @@ def getDetBoxes_core(textmap, linkmap, text_threshold, link_threshold, low_text)
     nLabels, labels, stats, centroids = cv2.connectedComponentsWithStats(text_score_comb.astype(np.uint8), connectivity=4)
 
     det = []
-    mapper = []
     for k in range(1,nLabels):
         # size filtering
         size = stats[k, cv2.CC_STAT_AREA]
@@ -74,9 +73,8 @@ def getDetBoxes_core(textmap, linkmap, text_threshold, link_threshold, low_text)
         box = np.array(box)
 
         det.append(box)
-        mapper.append(k)
 
-    return det, labels, mapper
+    return det
 
 def getPoly_core(boxes, labels, mapper, linkmap):
     # configs
@@ -224,15 +222,10 @@ def getPoly_core(boxes, labels, mapper, linkmap):
 
     return polys
 
-def getDetBoxes(textmap, linkmap, text_threshold, link_threshold, low_text, poly=False):
-    boxes, labels, mapper = getDetBoxes_core(textmap, linkmap, text_threshold, link_threshold, low_text)
+def getDetBoxes(textmap, linkmap, text_threshold, link_threshold, low_text):
+    boxes = getDetBoxes_core(textmap, linkmap, text_threshold, link_threshold, low_text)
 
-    if poly:
-        polys = getPoly_core(boxes, labels, mapper, linkmap)
-    else:
-        polys = [None] * len(boxes)
-
-    return boxes, polys
+    return boxes
 
 def adjustResultCoordinates(polys, ratio_w, ratio_h, ratio_net = 2):
     if len(polys) > 0:
