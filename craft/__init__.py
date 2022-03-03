@@ -8,7 +8,11 @@ if not os.path.isfile('/tmp/craft_mlt_25k.pth'):
 
 net = CRAFT()
 net.load_state_dict(copyStateDict(torch.load('/tmp/craft_mlt_25k.pth', map_location=lambda storage, loc: storage.cuda(0))))
+net = net.cuda()
+net = torch.nn.DataParallel(net)
 net.eval()
+print(next(net.parameters()).device)
+print(next(net.parameters()).is_cuda)
 refine_net = None
 
 
